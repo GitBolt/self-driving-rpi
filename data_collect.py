@@ -11,21 +11,21 @@ class CollectData:
         self.steering_list = []
         self.collection_directory = os.path.join(os.getcwd(), 'data')
 
-        while os.path.exists(os.path.join(self.collection_directory, f'image{str(self.folder_count)}')):
+        while os.path.exists(os.path.join(self.collection_directory, f'img{str(self.folder_count)}')):
             self.folder_count += 1
 
         self.new_path = self.collection_directory + \
-            "/image" + str(self.folder_count)
+            "/img" + str(self.folder_count)
 
     def save_log(self):
         raw_data = {'Image': self.image_list, 'Steering': self.steering_list}
         df = pd.DataFrame(raw_data)
         df.to_csv(os.path.join(self.collection_directory,
-                  f'log_{str(self.folder_count)}'))
+                  f'log_{str(self.folder_count)}.csv'), index=True, header=False)
         print("Log saved, total images: ", len(self.image_list))
 
     def save_data(self, img, steering):
-        file_name = os.path.join(self.new_path, f'img{time.time()}.jpg')
+        file_name = os.path.join(self.new_path, f'img{str(time.time()).replace(".", "-")}.jpg')
         cv2.imwrite(file_name, img)
         self.image_list.append(file_name)
         self.steering_list.append(steering)
