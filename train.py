@@ -1,46 +1,50 @@
-from sklearn.model_selection import train_test_split
+print('Setting UP')
 import os
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
+from sklearn.model_selection import train_test_split
 from utils import *
 
-print('Setting up...')
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 
-# Import data
+#### STEP 1 - INITIALIZE DATA
+print("Initializing")
 path = 'data'
 data = importDataInfo(path)
-print(data.head())
+print("Data head: ", data.head())
 
-# Visualize and balance data
-data = balanceData(data, display=True)
+#### STEP 2 - VISUALIZE AND BALANCE DATA
+data = balanceData(data,display=True)
 
-# Prepare data for processing
-imagesPath, steerings = loadData(path, data)
+#### STEP 3 - PREPARE FOR PROCESSING
+imagesPath, steerings = loadData(path,data)
+# print('No of Path Created for Images ',len(imagesPath),len(steerings))
+# cv2.imshow('Test Image',cv2.imread(imagesPath[5]))
+# cv2.waitKey(0)
 
-# Split data for training and validation
-x_train, x_val, y_train, y_val = train_test_split(imagesPath, steerings,
-                                                  test_size=0.2, random_state=10)
-print('Total training images:', len(x_train))
-print('Total validation images:', len(x_val))
+#### STEP 4 - SPLIT FOR TRAINING AND VALIDATION
+xTrain, xVal, yTrain, yVal = train_test_split(imagesPath, steerings,
+                                              test_size=0.2,random_state=10)
+print('Total Training Images: ',len(xTrain))
+print('Total Validation Images: ',len(xVal))
 
-# Augment data
+#### STEP 5 - AUGMENT DATA
 
-# Preprocess
+#### STEP 6 - PREPROCESS
 
-# Create model
+#### STEP 7 - CREATE MODEL
 model = createModel()
 
-# Train model
-history = model.fit(dataGen(x_train, y_train, 100, 1),
-                    steps_per_epoch=100,
-                    epochs=10,
-                    validation_data=dataGen(x_val, y_val, 50, 0),
-                    validation_steps=50)
+#### STEP 8 - TRAINNING
+history = model.fit(dataGen(xTrain, yTrain, 100, 1),
+                                  steps_per_epoch=100,
+                                  epochs=10,
+                                  validation_data=dataGen(xVal, yVal, 50, 0),
+                                  validation_steps=50)
 
-# Save model
+#### STEP 9 - SAVE THE MODEL
 model.save('model.h5')
-print('Model saved!')
+print('Model Saved')
 
-# Plot results
+#### STEP 10 - PLOT THE RESULTS
 plt.plot(history.history['loss'])
 plt.plot(history.history['val_loss'])
 plt.legend(['Training', 'Validation'])

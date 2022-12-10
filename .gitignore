@@ -1,1 +1,4 @@
 env
+model.h5
+data
+__pycache__
