@@ -15,8 +15,7 @@ from imgaug import augmenters as iaa
 import random
 
 
-# INITIALIZE DATA
-
+# STEP 1 - INITIALIZE DATA
 def getName(filePath):
     myImagePathL = filePath.split('/')[-2:]
     myImagePath = os.path.join(myImagePathL[0], myImagePathL[1])
@@ -25,17 +24,16 @@ def getName(filePath):
 
 def importDataInfo(path):
     columns = ['Center', 'Steering']
-    folder_count = len(os.listdir(path)) // 2
-    df = pd.DataFrame()
+    noOfFolders = len(os.listdir(path))//2
+    data = pd.DataFrame()
     for x in range(17, 22):
-        print(os.path.join(
-            path, f'log_{x}.csv'), columns)
-        new_data = pd.read_csv(os.path.join(
+        dataNew = pd.read_csv(os.path.join(
             path, f'log_{x}.csv'), names=columns)
-        print(new_data)
-        print("-"*100)
-        new_data['Center'] = new_data['Center'].apply(getName)
-        data = df.append(new_data, True)
+        print(f'{x}:{dataNew.shape[0]} ', end='')
+        # REMOVE FILE PATH AND GET ONLY FILE NAME
+        # print(getName(data['center'][0]))
+        dataNew['Center'] = dataNew['Center'].apply(getName)
+        data = data.append(dataNew, True)
     print(' ')
     print('Total Images Imported', data.shape[0])
     return data
@@ -153,7 +151,7 @@ def createModel():
     model.add(Dense(10, activation='elu'))
     model.add(Dense(1))
 
-    model.compile(Adam(learning_rate=0.0001), loss='mse')
+    model.compile(Adam(lr=0.0001), loss='mse')
     return model
 
 # STEP 8 - TRAINNING

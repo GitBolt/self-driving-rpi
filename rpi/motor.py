@@ -39,7 +39,7 @@ class Motor:
             right_speed = 100
         elif right_speed < -100:
             right_speed = -100
-            
+
         self.pwm_1.ChangeDutyCycle(abs(left_speed))
         self.pwm_2.ChangeDutyCycle(abs(right_speed))
         if left_speed > 0:
