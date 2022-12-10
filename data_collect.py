@@ -36,8 +36,6 @@ class CollectData:
         for x in range(loops if loops else 10):
             _, img = cap.read()
             self.save_data(img, 0.5)
-            cv2.waitKey(1)
-            cv2.imshow("Image", img)
         self.save_log()
 
 # data_collect = CollectData()
