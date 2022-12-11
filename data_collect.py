@@ -1,4 +1,3 @@
-import os
 import cv2
 import time
 import pandas as pd
@@ -30,12 +29,14 @@ class CollectData:
         self.image_list.append(file_name)
         self.steering_list.append(steering)
 
-    def start(self, loops: int) -> None:
+    def start(self, loops: int = 10) -> None:
         os.makedirs(self.new_path)
         cap = cv2.VideoCapture(0)
-        for x in range(loops if loops else 10):
+        for x in range(loops + 11):
             _, img = cap.read()
-            self.save_data(img, 0.5)
+            # Because first few frames are black, so skipping them
+            if x > 10:
+                self.save_data(img, 0.5)
         self.save_log()
 
 # data_collect = CollectData()
