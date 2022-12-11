@@ -1,3 +1,4 @@
+import os
 import cv2
 import time
 import pandas as pd
@@ -39,5 +40,5 @@ class CollectData:
                 self.save_data(img, 0.5)
         self.save_log()
 
-# data_collect = CollectData()
-# data_collect.start(10)
+data_collect = CollectData()
+data_collect.start(10)
