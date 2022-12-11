@@ -7,8 +7,8 @@ import motor as mm
 steering_sensitivity = 0.70  # Steering Sensitivity
 max_throttle = 0.22  # Throttle (Forward speed percentage)
 motor = mm.Motor(2, 3, 4, 17, 22, 27)
-model = load_model('model.h5')
 
+model = load_model('model.h5')
 
 def get_image(display=False, size=[480, 240]):
     capture = cv2.VideoCapture(0)
@@ -31,9 +31,9 @@ def pre_process(img):
 while True:
     img = get_image(False, [240, 120])
     img = np.asarray(img)
-    img = preProcess(img)
+    img = pre_process(img)
     img = np.array([img])
     steering = float(model.predict(img))
-    print("Steering: ", steering * steeringSen)
-    motor.move(maxThrottle, -steering * steeringSen)
+    print("Steering: ", steering * steering_sensitivity)
+    motor.move(maxThrottle, -steering * steering_sensitivity)
     cv2.waitKey(1)
