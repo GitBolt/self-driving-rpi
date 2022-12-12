@@ -7,11 +7,18 @@ GPIO.setwarnings(False)
 
 
 class Motor:
-    def __init__(self, enable_pin_1, input_pin_1, input_pin_2, enable_pin_2, input_pin_3, input_pin_4):
+    def __init__(self, 
+                 enable_pin_1, 
+                 enable_pin_2, 
+                 input_pin_1, 
+                 input_pin_2, 
+                 input_pin_3, 
+                 input_pin_4
+                 ):
         self.enable_pin_1 = enable_pin_1
+        self.enable_pin_2 = enable_pin_2
         self.input_pin_1 = input_pin_1
         self.input_pin_2 = input_pin_2
-        self.enable_pin_2 = enable_pin_2
         self.input_pin_3 = input_pin_3
         self.input_pin_4 = input_pin_4
         GPIO.setup(self.enable_pin_1, GPIO.OUT)
