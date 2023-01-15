@@ -1,9 +1,9 @@
 import os
 from sklearn.model_selection import train_test_split
-
 from utils import *
+from pre_process import *
+from model import create_model
 
-print('Setting up...')
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 
 path = 'data'
@@ -26,7 +26,6 @@ print('Total training images:', len(x_train))
 print('Total validation images:', len(x_val))
 
 model = create_model()
-
 
 history = model.fit(generate_data(x_train, y_train, 100, 1),
                     steps_per_epoch=100,
